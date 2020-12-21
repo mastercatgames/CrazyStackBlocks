@@ -39,29 +39,16 @@ public class LimitController : MonoBehaviour
         {
             if (gameController.currentBlock == null)
             {
+                print("Y: " + transform.localPosition.y);
+
+                bool moveCamera = false;
+                moveCamera = transform.localPosition.y > gameController.bestHeight;    
+
                 gameController.bestHeight = transform.localPosition.y;
                 gameController.score.text = gameController.bestHeight.ToString("F1");
-                gameController.SpawnNewBlock(true);
+                gameController.SpawnNewBlock(moveCamera);
                 transform.localPosition = Vector3.zero;
             }
         }
-        // if (isMoving)
-        // {
-        //     print("Está movendo ainda!!!");
-        // }
-        // else
-        // {
-        //     print(">> Parou de mover!!!");
-
-        //     print(gameController.currentBlock);
-
-        //     if (gameController.currentBlock == null)
-        //     {
-        //         gameController.bestHeight = transform.localPosition.y;
-        //         gameController.score.text = gameController.bestHeight.ToString("F1");
-        //         gameController.SpawnNewBlock(true);
-        //         transform.localPosition = Vector3.zero;
-        //     }
-        // }
     }
 }
