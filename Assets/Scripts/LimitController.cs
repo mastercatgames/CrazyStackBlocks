@@ -7,13 +7,12 @@ public class LimitController : MonoBehaviour
     public bool isMoving;
     public float moveSpeed;
     private GameController gameController;
-    // Start is called before the first frame update
+
     void Start()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (isMoving)
@@ -39,11 +38,8 @@ public class LimitController : MonoBehaviour
         {
             if (gameController.currentBlock == null)
             {
-                print("Y: " + transform.localPosition.y);
-
                 bool moveCamera = false;
-                moveCamera = transform.localPosition.y > gameController.bestHeight;    
-
+                moveCamera = transform.localPosition.y > gameController.bestHeight;   
                 gameController.bestHeight = transform.localPosition.y;
                 gameController.score.text = gameController.bestHeight.ToString("F1");
                 gameController.SpawnNewBlock(moveCamera);

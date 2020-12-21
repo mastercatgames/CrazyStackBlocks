@@ -5,9 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject square;
-    public GameObject currentBlock;
-    public GameObject stack;
+    public GameObject square, currentBlock, stack;
     public Transform floor;
     public float bestHeight;
     public Text score;
@@ -34,13 +32,12 @@ public class GameController : MonoBehaviour
         // Instantiate at position (0, 0, 0) and zero rotation.
         currentBlock = Instantiate(square, new Vector3(0, transform.position.y, 0), Quaternion.identity);
     }
-
+    
     public void DropBlock()
     {
         currentBlock.transform.SetParent(stack.transform);
         currentBlock.GetComponent<Block>().wasDropped = true;
         currentBlock.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         currentBlock = null;
-    }
-    
+    }    
 }
