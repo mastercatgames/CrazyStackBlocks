@@ -10,8 +10,11 @@ public class GameController : MonoBehaviour
     public float bestHeight;
     public Text score;
 
+    public float speedModifier;
+
     void Start()
     {
+        speedModifier = 0.005f;
         SpawnNewBlock(false);
     }
 
@@ -32,12 +35,34 @@ public class GameController : MonoBehaviour
         // Instantiate at position (0, 0, 0) and zero rotation.
         currentBlock = Instantiate(square, new Vector3(0, transform.position.y, 0), Quaternion.identity);
     }
-    
+
     public void DropBlock()
     {
         currentBlock.transform.SetParent(stack.transform);
+        currentBlock.GetComponent<Block>().isGrabbing = false;
         currentBlock.GetComponent<Block>().wasDropped = true;
         currentBlock.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         currentBlock = null;
-    }    
+    }
+
+    private void Update()
+    {
+        if (Input.touchCount > 0 && currentBlock != null)
+        {
+            Touch touch = Input.GetTouch(0);
+            currentBlock.GetComponent<Block>().isGrabbing = true;
+
+            if (touch.phase == TouchPhase.Moved)
+            {
+                currentBlock.transform.position = new Vector3(currentBlock.transform.position.x + touch.deltaPosition.x * speedModifier, currentBlock.transform.position.y, 0);
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                currentBlock.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                print("DropBlock!");
+                DropBlock();
+            }
+        }
+    }
 }

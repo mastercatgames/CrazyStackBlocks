@@ -102,7 +102,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 6
 --- !u!61 &3949599980297024508
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -143,5 +143,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 0
   isStatic: 0
-  speed: -50
-  decrementSpeed: 1
+  isTouching: 0
+  isGrabbing: 0
+  fixedHorizontal: 0
+  rotationSpeed: -50
+  decrementRotationSpeed: 1

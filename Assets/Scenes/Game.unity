@@ -435,8 +435,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!61 &389425160
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -867,8 +868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!61 &886054722
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1531,8 +1533,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!61 &1755689831
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1677,6 +1680,7 @@ MonoBehaviour:
   floor: {fileID: 1268715957}
   bestHeight: 0
   score: {fileID: 436714500}
+  speedModifier: 0.005
 --- !u!4 &1930471492
 Transform:
   m_ObjectHideFlags: 0
@@ -2097,8 +2101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!61 &1795179844059540367
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2160,8 +2165,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!212 &3087585807664468789
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2305,8 +2311,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!212 &5355797580098541917
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2532,8 +2539,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wasDropped: 1
   isStatic: 1
-  speed: -50
-  decrementSpeed: 1
+  isGrabbing: 0
+  rotationSpeed: 0
+  decrementRotationSpeed: 0
 --- !u!61 &8646985655305507770
 BoxCollider2D:
   m_ObjectHideFlags: 0
