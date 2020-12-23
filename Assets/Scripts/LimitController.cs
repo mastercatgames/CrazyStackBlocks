@@ -43,7 +43,12 @@ public class LimitController : MonoBehaviour
                 gameController.bestHeight = transform.localPosition.y;
                 gameController.score.text = gameController.bestHeight.ToString("F1") + "m";
                 gameController.SpawnNewBlock(moveCamera);
-                transform.localPosition = Vector3.zero;
+                //transform.localPosition = Vector3.zero; //Reset the limiter position to floor
+                //Improved this code bellow, instead of always scan from the floor, scan close from the last height
+                
+                GetComponent<BoxCollider2D>().enabled = false;
+                GetComponent<SpriteRenderer>().enabled = false;
+                transform.localPosition = new Vector3(0f, gameController.bestHeight - 1f, 0f);
             }
         }
     }

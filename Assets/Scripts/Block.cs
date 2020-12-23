@@ -9,13 +9,11 @@ public class Block : MonoBehaviour
     public float decrementRotationSpeed; //40f (hard)
     private GameController gameController;
     private LimitController limitController;
-    // private DynamicJoystick dynamicJoystick;
     // Start is called before the first frame update
     void Start()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
-        // dynamicJoystick = GameObject.FindGameObjectWithTag("Joystick").GetComponent<DynamicJoystick>();
     }
 
     // Update is called once per frame
@@ -29,10 +27,12 @@ public class Block : MonoBehaviour
                 RotateLeft();
             }
 
-            if (!isStatic)
+            if (!isStatic && !limitController.isMoving)
             {
                 if (GetComponent<Rigidbody2D>().IsSleeping())
                 {
+                    limitController.GetComponent<BoxCollider2D>().enabled = true;
+                    limitController.GetComponent<SpriteRenderer>().enabled = true;
                     isStatic = true;
                     limitController.isMoving = true;
                 }
