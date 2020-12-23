@@ -41,7 +41,7 @@ public class LimitController : MonoBehaviour
                 bool moveCamera = false;
                 moveCamera = transform.localPosition.y > gameController.bestHeight;   
                 gameController.bestHeight = transform.localPosition.y;
-                gameController.score.text = gameController.bestHeight.ToString("F1");
+                gameController.score.text = gameController.bestHeight.ToString("F1") + "m";
                 gameController.SpawnNewBlock(moveCamera);
                 transform.localPosition = Vector3.zero;
             }

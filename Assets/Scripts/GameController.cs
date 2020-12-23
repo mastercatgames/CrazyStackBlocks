@@ -38,10 +38,11 @@ public class GameController : MonoBehaviour
 
     public void DropBlock()
     {
+        currentBlock.transform.Find("Arrows").gameObject.SetActive(false);
         currentBlock.transform.SetParent(stack.transform);
-        currentBlock.GetComponent<Block>().isGrabbing = false;
-        currentBlock.GetComponent<Block>().wasDropped = true;
-        currentBlock.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        currentBlock.GetComponentInChildren<Block>().isGrabbing = false;
+        currentBlock.GetComponentInChildren<Block>().wasDropped = true;
+        currentBlock.GetComponentInChildren<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         currentBlock = null;
     }
 
@@ -50,7 +51,8 @@ public class GameController : MonoBehaviour
         if (Input.touchCount > 0 && currentBlock != null)
         {
             Touch touch = Input.GetTouch(0);
-            currentBlock.GetComponent<Block>().isGrabbing = true;
+            currentBlock.GetComponentInChildren<Block>().isGrabbing = true;
+            currentBlock.transform.Find("Arrows").gameObject.SetActive(true);
 
             if (touch.phase == TouchPhase.Moved)
             {
@@ -59,7 +61,7 @@ public class GameController : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
-                currentBlock.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                currentBlock.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
                 print("DropBlock!");
                 DropBlock();
             }
