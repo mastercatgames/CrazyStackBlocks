@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
     public GameObject[] blocksList;
     public float bestHeight, speedModifier;
-    public GameObject currentBlock;
+    public bool isInGameOver;
+    public GameObject currentBlock, GameOverPanel;
     public Transform floor;    
     public Text score;    
 
@@ -47,7 +49,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount > 0 && currentBlock != null)
+        if (Input.touchCount > 0 && currentBlock != null && !isInGameOver)
         {
             Touch touch = Input.GetTouch(0);
             currentBlock.GetComponentInChildren<Block>().isGrabbing = true;
@@ -65,5 +67,19 @@ public class GameController : MonoBehaviour
                 DropBlock();
             }
         }
+    }
+
+    public void GameOver()
+    {
+        isInGameOver = true;
+        score.gameObject.SetActive(false);
+
+        GameOverPanel.transform.Find("Title").GetComponentInChildren<Text>().text = "Score: " + score.text;
+        GameOverPanel.SetActive(true);
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene(0);
     }
 }

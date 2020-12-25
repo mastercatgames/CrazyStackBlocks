@@ -15,7 +15,7 @@ public class LimitController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isMoving)
+        if (isMoving && !gameController.isInGameOver)
         {
             transform.Translate(Vector3.up * moveSpeed * Time.deltaTime);
         }
@@ -36,7 +36,7 @@ public class LimitController : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (gameController.currentBlock == null)
+            if (gameController.currentBlock == null && !gameController.isInGameOver)
             {
                 bool moveCamera = false;
                 moveCamera = transform.localPosition.y > gameController.bestHeight;   

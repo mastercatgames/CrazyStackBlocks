@@ -46,4 +46,12 @@ public class Block : MonoBehaviour
             rotationSpeed -= Time.deltaTime * decrementRotationSpeed;
         transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.name == "DeadZone")
+        {
+            gameController.GameOver();
+        }
+    }
 }
