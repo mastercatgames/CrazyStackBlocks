@@ -200,7 +200,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 35647941}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -229,7 +229,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -50
   m_Sprite: {fileID: 21300000, guid: dfcbb80d591a46646b49e08e70b7b475, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -553,8 +553,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268715955}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.19, y: -1.45, z: 0}
-  m_LocalScale: {x: 100, y: 0.759676, z: 1}
+  m_LocalPosition: {x: 0, y: -1.45, z: 0}
+  m_LocalScale: {x: 4.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -732,13 +732,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a18f6c9b21cae48b8630aa9fdf0a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  square: {fileID: 2481695201755019064, guid: bc2084ef4f08e60459186c711ce0f7d5, type: 3}
-  currentBlock: {fileID: 0}
-  stack: {fileID: 1539078175}
-  floor: {fileID: 1268715957}
+  blocksList:
+  - {fileID: 2010063793905486561, guid: e8b7ee558b46ea44eb1fa5f7415d4d68, type: 3}
+  - {fileID: 7856563047027413225, guid: a5b41498c7933e6468f0274817cc879d, type: 3}
+  - {fileID: 6982597315066040036, guid: f3cb274d47efecc45a0dec57404770b9, type: 3}
+  - {fileID: 5525848168589457103, guid: 76d6b0ed76d517f4da848e7f452cf70f, type: 3}
+  - {fileID: 4146415727957102128, guid: 97018106bcafd654e9b98e4e17db14ca, type: 3}
   bestHeight: 0
-  score: {fileID: 436714500}
   speedModifier: 0.005
+  currentBlock: {fileID: 0}
+  floor: {fileID: 1268715957}
+  score: {fileID: 436714500}
 --- !u!4 &1930471492
 Transform:
   m_ObjectHideFlags: 0

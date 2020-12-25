@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public GameObject square, currentBlock, stack;
-    public Transform floor;
-    public float bestHeight;
-    public Text score;
-
-    public float speedModifier;
+    public GameObject[] blocksList;
+    public float bestHeight, speedModifier;
+    public GameObject currentBlock;
+    public Transform floor;    
+    public Text score;    
 
     void Start()
     {
@@ -33,13 +32,13 @@ public class GameController : MonoBehaviour
             }
         }
         // Instantiate at position (0, 0, 0) and zero rotation.
-        currentBlock = Instantiate(square, new Vector3(0, transform.position.y, 0), Quaternion.identity);
+        currentBlock = Instantiate(blocksList[Random.Range(0, blocksList.Length)], new Vector3(0, transform.position.y, 0), Quaternion.identity);
     }
 
     public void DropBlock()
     {
         currentBlock.transform.Find("Arrows").gameObject.SetActive(false);
-        currentBlock.transform.SetParent(stack.transform);
+        currentBlock.transform.SetParent(GameObject.Find("Stack").transform);
         currentBlock.GetComponentInChildren<Block>().isGrabbing = false;
         currentBlock.GetComponentInChildren<Block>().wasDropped = true;
         currentBlock.GetComponentInChildren<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
