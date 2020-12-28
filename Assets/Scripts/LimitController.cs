@@ -13,7 +13,7 @@ public class LimitController : MonoBehaviour
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (isMoving && !gameController.isInGameOver)
         {
@@ -36,19 +36,25 @@ public class LimitController : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (gameController.currentBlock == null && !gameController.isInGameOver)
+            if (gameController.currentBlock == null && !gameController.isInGameOver && gameController.timerAfterDrop >= 6f)
             {
                 bool moveCamera = false;
-                moveCamera = transform.localPosition.y > gameController.bestHeight;   
-                gameController.bestHeight = transform.localPosition.y;
+                moveCamera = Mathf.RoundToInt(transform.localPosition.y) > Mathf.RoundToInt(gameController.bestHeight);
+                gameController.bestHeight = transform.localPosition.y;//float.Parse(transform.localPosition.y.ToString("F1"));
                 gameController.score.text = gameController.bestHeight.ToString("F1") + "m";
                 gameController.SpawnNewBlock(moveCamera);
                 //transform.localPosition = Vector3.zero; //Reset the limiter position to floor
                 //Improved this code bellow, instead of always scan from the floor, scan close from the last height
-                
+
                 GetComponent<BoxCollider2D>().enabled = false;
                 GetComponent<SpriteRenderer>().enabled = false;
-                transform.localPosition = new Vector3(0f, gameController.bestHeight - 1f, 0f);
+                //transform.localPosition = new Vector3(0f, gameController.bestHeight - 1f, 0f);
+                transform.localPosition = Vector3.zero;
+
+                if (moveCamera)
+                {
+                    moveSpeed += (gameController.bestHeight * 0.1f);
+                }
             }
         }
     }

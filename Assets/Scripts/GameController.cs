@@ -7,14 +7,16 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public GameObject[] blocksList;
-    public float bestHeight, speedModifier;
+    public float bestHeight, speedModifier, timerAfterDrop, maxTimeAfterDrop;
     public bool isInGameOver;
-    public GameObject currentBlock, GameOverPanel;
-    public Transform floor;    
-    public Text score;    
+    public GameObject currentBlock, lastBlockDropped, GameOverPanel;
+    public Transform floor;
+    public Text score;
 
     void Start()
     {
+        timerAfterDrop = 6f; //after the max time
+        maxTimeAfterDrop = 5f;
         speedModifier = 0.005f;
         SpawnNewBlock(false);
     }
@@ -24,11 +26,11 @@ public class GameController : MonoBehaviour
         if (moveCamera)
         {
             //TODO: Smooth moviment
-            transform.position = new Vector3(0, bestHeight - 0.5f, 0);
+            transform.position = new Vector3(0, bestHeight, 0);
 
-            Camera.main.transform.position = new Vector3(0, Camera.main.transform.position.y + 0.5f, -10);
+            Camera.main.transform.position = new Vector3(0, Camera.main.transform.position.y + 0.5f, -10f);
 
-            if (Camera.main.transform.position.y > 2.5)
+            if (Camera.main.transform.position.y > 2.5f)
             {
                 Camera.main.orthographicSize += 0.7f;
             }
@@ -39,32 +41,53 @@ public class GameController : MonoBehaviour
 
     public void DropBlock()
     {
+        // if (timerAfterDrop > 6f)
+        // {
         currentBlock.transform.Find("Arrows").gameObject.SetActive(false);
         currentBlock.transform.SetParent(GameObject.Find("Stack").transform);
         currentBlock.GetComponentInChildren<Block>().isGrabbing = false;
         currentBlock.GetComponentInChildren<Block>().wasDropped = true;
         currentBlock.GetComponentInChildren<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+        lastBlockDropped = currentBlock;
         currentBlock = null;
+        timerAfterDrop = 0f;
+        // }
     }
 
     private void Update()
     {
-        if (Input.touchCount > 0 && currentBlock != null && !isInGameOver)
+        if (!isInGameOver)
         {
-            Touch touch = Input.GetTouch(0);
-            currentBlock.GetComponentInChildren<Block>().isGrabbing = true;
-            currentBlock.transform.Find("Arrows").gameObject.SetActive(true);
-
-            if (touch.phase == TouchPhase.Moved)
+            if (Input.touchCount > 0 && currentBlock != null)
             {
-                currentBlock.transform.position = new Vector3(currentBlock.transform.position.x + touch.deltaPosition.x * speedModifier, currentBlock.transform.position.y, 0);
+                Touch touch = Input.GetTouch(0);
+                currentBlock.GetComponentInChildren<Block>().isGrabbing = true;
+                currentBlock.transform.Find("Arrows").gameObject.SetActive(true);
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    currentBlock.transform.position = new Vector3(currentBlock.transform.position.x + touch.deltaPosition.x * speedModifier, currentBlock.transform.position.y, 0);
+                }
+
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    currentBlock.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
+                    print("DropBlock!");
+                    DropBlock();
+                }
             }
 
-            if (touch.phase == TouchPhase.Ended)
+            if (timerAfterDrop < maxTimeAfterDrop)
             {
-                currentBlock.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
-                print("DropBlock!");
-                DropBlock();
+                timerAfterDrop += Time.deltaTime;
+            }
+            else if (lastBlockDropped != null)
+            {
+                //if time is over and the current form that was dropped still static
+                if (!lastBlockDropped.GetComponentInChildren<Block>().isStatic)
+                {
+                    lastBlockDropped.GetComponentInChildren<Block>().SleepBlock();
+                }
             }
         }
     }

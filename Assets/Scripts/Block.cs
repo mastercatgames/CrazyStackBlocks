@@ -14,6 +14,9 @@ public class Block : MonoBehaviour
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
+
+        rotationSpeed = -50f;
+        decrementRotationSpeed = 40f;
     }
 
     // Update is called once per frame
@@ -31,10 +34,11 @@ public class Block : MonoBehaviour
             {
                 if (GetComponent<Rigidbody2D>().IsSleeping())
                 {
-                    limitController.GetComponent<BoxCollider2D>().enabled = true;
-                    limitController.GetComponent<SpriteRenderer>().enabled = true;
-                    isStatic = true;
-                    limitController.isMoving = true;
+                    // limitController.GetComponent<BoxCollider2D>().enabled = true;
+                    // limitController.GetComponent<SpriteRenderer>().enabled = true;
+                    // isStatic = true;
+                    // limitController.isMoving = true;
+                    SleepBlock();
                 }
             }
         }
@@ -47,9 +51,18 @@ public class Block : MonoBehaviour
         transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime);
     }
 
+    public void SleepBlock()
+    {
+        limitController.GetComponent<BoxCollider2D>().enabled = true;
+        limitController.GetComponent<SpriteRenderer>().enabled = true;
+        isStatic = true;
+        limitController.isMoving = true;
+        gameController.timerAfterDrop = 6f; //reset timer
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "DeadZone")
+        if (other.name == "DeadZone") 
         {
             gameController.GameOver();
         }
