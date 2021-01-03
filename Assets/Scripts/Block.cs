@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    public bool wasDropped, isStatic, isGrabbing;
+    public bool wasDropped, isStatic, isGrabbing, look;
     public float rotationSpeed; //-50f
     public float decrementRotationSpeed; //40f (hard)
     private GameController gameController;
@@ -17,6 +17,16 @@ public class Block : MonoBehaviour
 
         rotationSpeed = -50f;
         decrementRotationSpeed = 40f;
+
+        Transform eyes = transform.Find("Face").Find("Eyes");
+
+        //Change the color of Eyes Lid
+        Color updatedColor = GetComponent<SpriteRenderer>().color;
+        float amount = 0.1f;
+        updatedColor = new Color(updatedColor.r - amount, updatedColor.g - amount, updatedColor.b - amount);
+
+        eyes.Find("_rightEye").Find("Lid").GetComponent<SpriteRenderer>().color = updatedColor;
+        eyes.Find("_leftEye").Find("Lid").GetComponent<SpriteRenderer>().color = updatedColor;
     }
 
     // Update is called once per frame

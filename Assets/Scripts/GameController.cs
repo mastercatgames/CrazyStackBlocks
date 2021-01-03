@@ -47,6 +47,13 @@ public class GameController : MonoBehaviour
         currentBlock.transform.SetParent(GameObject.Find("Stack").transform);
         currentBlock.GetComponentInChildren<Block>().isGrabbing = false;
         currentBlock.GetComponentInChildren<Block>().wasDropped = true;
+        currentBlock.GetComponentInChildren<Block>().look = true;
+
+        Transform eyes = currentBlock.transform.Find("Block").Find("Face").Find("Eyes");
+
+        eyes.Find("_rightEye").Find("Eye").Find("Pupil").localPosition = new Vector3(0f, 0.211f, 0f);
+        eyes.Find("_leftEye").Find("Eye").Find("Pupil").localPosition = new Vector3(0f, 0.211f, 0f);
+
         currentBlock.GetComponentInChildren<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
         lastBlockDropped = currentBlock;
         currentBlock = null;
@@ -72,7 +79,7 @@ public class GameController : MonoBehaviour
                 if (touch.phase == TouchPhase.Ended)
                 {
                     currentBlock.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
-                    print("DropBlock!");
+                    //print("DropBlock!");
                     DropBlock();
                 }
             }
