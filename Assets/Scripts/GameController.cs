@@ -12,9 +12,11 @@ public class GameController : MonoBehaviour
     public GameObject currentBlock, lastBlockDropped, GameOverPanel;
     public Transform floor;
     public Text score;
+    private LimitController limitController;
 
     void Start()
-    {
+    {           
+        limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
         timerAfterDrop = 6f; //after the max time
         maxTimeAfterDrop = 5f;
         speedModifier = 0.005f;
@@ -41,8 +43,6 @@ public class GameController : MonoBehaviour
 
     public void DropBlock()
     {
-        // if (timerAfterDrop > 6f)
-        // {
         currentBlock.transform.Find("Arrows").gameObject.SetActive(false);
         currentBlock.transform.SetParent(GameObject.Find("Stack").transform);
         currentBlock.GetComponentInChildren<Block>().isGrabbing = false;
@@ -58,7 +58,6 @@ public class GameController : MonoBehaviour
         lastBlockDropped = currentBlock;
         currentBlock = null;
         timerAfterDrop = 0f;
-        // }
     }
 
     private void Update()
@@ -84,6 +83,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
+            //Timeout After drop
             if (timerAfterDrop < maxTimeAfterDrop)
             {
                 timerAfterDrop += Time.deltaTime;

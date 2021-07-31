@@ -44,11 +44,13 @@ public class Block : MonoBehaviour
             {
                 if (GetComponent<Rigidbody2D>().IsSleeping())
                 {
-                    // limitController.GetComponent<BoxCollider2D>().enabled = true;
-                    // limitController.GetComponent<SpriteRenderer>().enabled = true;
-                    // isStatic = true;
-                    // limitController.isMoving = true;
-                    SleepBlock();
+                    //Give an extra time (2 seconds), because IsSleeping fires fast sometimes
+                    //Edit: It fires fast when we tap, hold and release the finger (without move to sides)
+                    //I don't know why this happen :( but this 2 seconds works fine
+                    if (gameController.timerAfterDrop > 2f)
+                    {
+                        SleepBlock();
+                    }
                 }
             }
         }
@@ -63,16 +65,14 @@ public class Block : MonoBehaviour
 
     public void SleepBlock()
     {
-        limitController.GetComponent<BoxCollider2D>().enabled = true;
-        limitController.GetComponent<SpriteRenderer>().enabled = true;
         isStatic = true;
-        limitController.isMoving = true;
+        limitController.Invoke("Move", 0.5f);
         gameController.timerAfterDrop = 6f; //reset timer
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "DeadZone") 
+        if (other.name == "DeadZone")
         {
             gameController.GameOver();
         }

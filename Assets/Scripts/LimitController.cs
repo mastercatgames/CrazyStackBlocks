@@ -36,7 +36,7 @@ public class LimitController : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (gameController.currentBlock == null && !gameController.isInGameOver && gameController.timerAfterDrop >= 6f)
+            if (gameController.currentBlock == null && !gameController.isInGameOver /* && gameController.timerAfterDrop >= 6f*/)
             {
                 bool moveCamera = false;
                 moveCamera = Mathf.RoundToInt(transform.localPosition.y) > Mathf.RoundToInt(gameController.bestHeight);
@@ -56,6 +56,16 @@ public class LimitController : MonoBehaviour
                     moveSpeed += (gameController.bestHeight * 0.1f);
                 }
             }
+        }
+    }
+
+    public void Move()
+    {
+        if (isMoving == false)
+        {
+            GetComponent<BoxCollider2D>().enabled = true;
+            GetComponent<SpriteRenderer>().enabled = true;
+            isMoving = true;
         }
     }
 }
