@@ -72,7 +72,7 @@ public class Block : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.name == "DeadZone")
+        if (other.name == "DeadZone" && !gameController.isInGameOver)
         {
             gameController.GameOver();
         }

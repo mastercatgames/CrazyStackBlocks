@@ -15,12 +15,14 @@ public class GameController : MonoBehaviour
     private LimitController limitController;
 
     void Start()
-    {           
+    {
         limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
         timerAfterDrop = 6f; //after the max time
         maxTimeAfterDrop = 5f;
         speedModifier = 0.005f;
         SpawnNewBlock(false);
+
+        //PlayerPrefs.SetFloat("BestScore", 0f);
     }
 
     public void SpawnNewBlock(bool moveCamera)
@@ -104,12 +106,26 @@ public class GameController : MonoBehaviour
         isInGameOver = true;
         score.gameObject.SetActive(false);
 
-        GameOverPanel.transform.Find("Title").GetComponentInChildren<Text>().text = "Score: " + score.text;
+        GameOverPanel.transform.Find("Body").Find("Score").GetComponentInChildren<Text>().text = "Score: " + score.text;
+
+        if (bestHeight > PlayerPrefs.GetFloat("BestScore"))
+        {
+            PlayerPrefs.SetFloat("BestScore", bestHeight);
+            GameOverPanel.transform.Find("Body").Find("Best").GetComponentInChildren<Text>().text = "New Best: " + PlayerPrefs.GetFloat("BestScore").ToString("F1") + "m";
+        }
+        else
+        {
+            GameOverPanel.transform.Find("Body").Find("Best").GetComponentInChildren<Text>().text = "Best: " + PlayerPrefs.GetFloat("BestScore").ToString("F1") + "m";
+        }
         GameOverPanel.SetActive(true);
     }
 
     public void Retry()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Game");
+    }
+    public void Menu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }
