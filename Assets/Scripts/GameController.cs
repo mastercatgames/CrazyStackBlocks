@@ -41,6 +41,8 @@ public class GameController : MonoBehaviour
         }
         // Instantiate at position (0, 0, 0) and zero rotation.
         currentBlock = Instantiate(blocksList[Random.Range(0, blocksList.Length)], new Vector3(0, transform.position.y, 0), Quaternion.identity);
+
+        GameObject.Find("SFX").transform.Find("ShowBlock").GetComponent<AudioSource>().Play();
     }
 
     public void DropBlock()
