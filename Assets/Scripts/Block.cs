@@ -12,11 +12,25 @@ public class Block : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
-        limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
-
         rotationSpeed = -50f;
         decrementRotationSpeed = 40f;
+
+        if (GameObject.Find("GameController"))
+            gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        if (GameObject.Find("LimitController"))
+            limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
+        else
+        {
+            //Menu...
+            //* Random rotation
+            //* Don't increase speed rotation;
+            int randomRotation = Random.Range(0, 2);
+            if (randomRotation == 0)
+                rotationSpeed = -20f;
+            else
+                rotationSpeed = 20f;
+            decrementRotationSpeed = 0f;
+        }
 
         Transform eyes = transform.Find("Face").Find("Eyes");
 
@@ -32,7 +46,6 @@ public class Block : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (!isGrabbing)
         {
             if (!wasDropped)
@@ -40,7 +53,7 @@ public class Block : MonoBehaviour
                 RotateLeft();
             }
 
-            if (!isStatic && !limitController.isMoving)
+            if (!isStatic && (GameObject.Find("LimitController") && !limitController.isMoving))
             {
                 if (GetComponent<Rigidbody2D>().IsSleeping())
                 {
@@ -79,9 +92,10 @@ public class Block : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.relativeVelocity.magnitude > 0.1)
+        if (other.relativeVelocity.magnitude > 2)
         {
             GameObject.Find("SFX").transform.Find("Hit").GetComponent<AudioSource>().Play();
+            transform.Find("DustParticleHit").GetComponent<ParticleSystem>().Play();
         }
     }
 }

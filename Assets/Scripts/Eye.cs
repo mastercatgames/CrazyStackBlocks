@@ -8,7 +8,10 @@ public class Eye : MonoBehaviour
     public Vector3 target;
     void Start()
     {
-        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        if (GameObject.Find("GameController"))
+        {
+            gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        }
         target = Vector3.zero;
         InvokeRepeating("BlinkEyes", 1f, 8f);
     }
@@ -16,7 +19,7 @@ public class Eye : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.parent.GetComponentInParent<Block>().look)
+        if (GameObject.Find("GameController") && transform.parent.GetComponentInParent<Block>().look)
         {
             if (gameController.currentBlock != null)
             {
