@@ -68,7 +68,8 @@ public class GameController : MonoBehaviour
     {
         if (!isInGameOver)
         {
-            if (Input.touchCount > 0 && currentBlock != null)
+            print ("touchCount: " + Input.touchCount);
+            if (Input.touchCount == 1 && currentBlock != null && timerAfterDrop == 6f)
             {
                 Touch touch = Input.GetTouch(0);
                 currentBlock.GetComponentInChildren<Block>().isGrabbing = true;

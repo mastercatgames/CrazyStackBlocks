@@ -36,7 +36,7 @@ public class LimitController : MonoBehaviour
     {
         if (!isMoving)
         {
-            if (gameController.currentBlock == null && !gameController.isInGameOver /* && gameController.timerAfterDrop >= 6f*/)
+            if (gameController.currentBlock == null && !gameController.isInGameOver  && gameController.timerAfterDrop >= 6f)
             {
                 bool moveCamera = false;
                 moveCamera = Mathf.RoundToInt(transform.localPosition.y) > Mathf.RoundToInt(gameController.bestHeight);
