@@ -14,6 +14,10 @@ public class GameController : MonoBehaviour
     public Text score;
     private LimitController limitController;
 
+    public Vector3 delta = Vector3.zero;
+    public Vector3 lastPos = Vector3.zero;
+
+
     void Start()
     {
         limitController = GameObject.Find("LimitController").GetComponent<LimitController>();
@@ -21,8 +25,6 @@ public class GameController : MonoBehaviour
         maxTimeAfterDrop = 5f;
         speedModifier = 0.005f;
         SpawnNewBlock(false);
-
-        //PlayerPrefs.SetFloat("BestScore", 0f);
     }
 
     public void SpawnNewBlock(bool moveCamera)
@@ -47,6 +49,7 @@ public class GameController : MonoBehaviour
 
     public void DropBlock()
     {
+        currentBlock.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
         currentBlock.transform.Find("Arrows").gameObject.SetActive(false);
         currentBlock.transform.SetParent(GameObject.Find("Stack").transform);
         currentBlock.GetComponentInChildren<Block>().isGrabbing = false;
@@ -64,28 +67,35 @@ public class GameController : MonoBehaviour
         timerAfterDrop = 0f;
     }
 
+    private void GrabBlock()
+    {
+        lastPos = Input.mousePosition;
+        currentBlock.GetComponentInChildren<Block>().isGrabbing = true;
+        currentBlock.transform.Find("Arrows").gameObject.SetActive(true);
+    }
+
+    private void MoveBlock()
+    {
+        delta = Input.mousePosition - lastPos;
+        currentBlock.transform.position = new Vector3(currentBlock.transform.position.x + delta.x * speedModifier, currentBlock.transform.position.y, 0);
+        lastPos = Input.mousePosition;
+    }
+
     private void Update()
     {
         if (!isInGameOver)
         {
-            print ("touchCount: " + Input.touchCount);
-            if (Input.touchCount == 1 && currentBlock != null && timerAfterDrop == 6f)
+            if (Input.GetMouseButtonDown(0) && Input.touchCount <= 1)
             {
-                Touch touch = Input.GetTouch(0);
-                currentBlock.GetComponentInChildren<Block>().isGrabbing = true;
-                currentBlock.transform.Find("Arrows").gameObject.SetActive(true);
-
-                if (touch.phase == TouchPhase.Moved)
-                {
-                    currentBlock.transform.position = new Vector3(currentBlock.transform.position.x + touch.deltaPosition.x * speedModifier, currentBlock.transform.position.y, 0);
-                }
-
-                if (touch.phase == TouchPhase.Ended)
-                {
-                    currentBlock.GetComponentInChildren<Rigidbody2D>().velocity = Vector2.zero;
-                    //print("DropBlock!");
-                    DropBlock();
-                }
+                GrabBlock();
+            }
+            else if (Input.GetMouseButton(0) && Input.touchCount <= 1)
+            {
+                MoveBlock();
+            }
+            else if (Input.GetMouseButtonUp(0))
+            {
+                DropBlock();
             }
 
             //Timeout After drop

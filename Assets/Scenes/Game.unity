@@ -260,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 35647941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5.540954, y: 0.06, z: 1}
+  m_LocalScale: {x: 1000, y: 0.06, z: 1}
   m_Children: []
   m_Father: {fileID: 1539078176}
   m_RootOrder: 0
@@ -2442,6 +2442,9 @@ MonoBehaviour:
   GameOverPanel: {fileID: 1217584557}
   floor: {fileID: 1268715957}
   score: {fileID: 436714500}
+  delta: {x: 0, y: 0, z: 0}
+  touchDeltaPosition: {x: 0, y: 0, z: 0}
+  lastPos: {x: 0, y: 0, z: 0}
 --- !u!4 &1930471492
 Transform:
   m_ObjectHideFlags: 0
