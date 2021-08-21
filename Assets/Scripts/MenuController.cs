@@ -23,4 +23,14 @@ public class MenuController : MonoBehaviour
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(active);
     }
+
+    public void SetGOActive(GameObject gameObject)
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void SetGOInactive(GameObject gameObject)
+    {
+        gameObject.SetActive(false);
+    }
 }

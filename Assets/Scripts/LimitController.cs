@@ -41,7 +41,7 @@ public class LimitController : MonoBehaviour
                 bool moveCamera = false;
                 moveCamera = Mathf.RoundToInt(transform.localPosition.y) > Mathf.RoundToInt(gameController.bestHeight);
                 gameController.bestHeight = transform.localPosition.y;//float.Parse(transform.localPosition.y.ToString("F1"));
-                gameController.score.text = gameController.bestHeight.ToString("F1") + "m";
+                gameController.score.text = gameController.bestHeight.ToString("F1").Replace(",", ".") + "m";
                 gameController.SpawnNewBlock(moveCamera);
                 //transform.localPosition = Vector3.zero; //Reset the limiter position to floor
                 //Improved this code bellow, instead of always scan from the floor, scan close from the last height

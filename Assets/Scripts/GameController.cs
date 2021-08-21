@@ -124,11 +124,11 @@ public class GameController : MonoBehaviour
         if (bestHeight > PlayerPrefs.GetFloat("BestScore"))
         {
             PlayerPrefs.SetFloat("BestScore", bestHeight);
-            GameOverPanel.transform.Find("Body").Find("Best").GetComponentInChildren<Text>().text = "New Best: " + PlayerPrefs.GetFloat("BestScore").ToString("F1") + "m";
+            GameOverPanel.transform.Find("Body").Find("Best").GetComponentInChildren<Text>().text = "New Best: " + PlayerPrefs.GetFloat("BestScore").ToString("F1").Replace(",", ".") + "m";
         }
         else
         {
-            GameOverPanel.transform.Find("Body").Find("Best").GetComponentInChildren<Text>().text = "Best: " + PlayerPrefs.GetFloat("BestScore").ToString("F1") + "m";
+            GameOverPanel.transform.Find("Body").Find("Best").GetComponentInChildren<Text>().text = "Best: " + PlayerPrefs.GetFloat("BestScore").ToString("F1").Replace(",", ".") + "m";
         }
         GameOverPanel.SetActive(true);
     }
